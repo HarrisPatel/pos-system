@@ -1,0 +1,61 @@
+
+h4{
+    text-align:center;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 18px;
+}
+
+.category {
+    background-color: #f8f9fa;
+    height : 10%;
+}
+
+.items {
+    background-color: #f8f9fa;
+    height : 65vh;
+    border: 2px solid black;
+    border-left: none;
+    border-top: none;
+
+}
+.search {
+    background-color: #f8f9fa;
+    height : 20vh;
+    border: 2px solid black;
+    border-left: none;
+    border-top: none;
+    border-bottom : none
+}
+
+.search-input {
+    width : 100%;
+    border: 2px solid black;
+    padding: 2px;
+    outline : none
+
+}
+.quantity-input{
+    width : 100%;
+    border: 2px solid black;
+    padding: 2px;
+    outline : none
+
+}
+.add-cart{
+    width: 150px;
+    padding: 17px;
+    margin: 15px 0px;
+    font-weight: bold;
+    text-transform: capitalize;
+    background-color: darkblue;
+    font-size: 16px;
+    color: white;
+    border: none;
+}
+
+.item-box{
+    border-bottom: 1px solid lightgray;
+    padding : 10px 0px;
+    display:flex;
+    justify-content : space-between;
+}

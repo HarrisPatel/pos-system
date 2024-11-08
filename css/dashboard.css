@@ -1,0 +1,47 @@
+.dashboard {
+    background-color: #f8f9fa;
+    padding: 30px;
+}
+
+.dashboard-header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.dashboard-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 5px 15px;
+    transition: transform 0.2s ease-in-out;
+    padding: 20px;
+    text-align: left;
+    height: 100%;
+}
+
+.dashboard-card:hover {
+    transform: scale(1.05);
+}
+
+.dashboard-card h5 {
+    font-size: 18px;
+    color: #343a40;
+}
+
+.dashboard-card p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.dashboard-card ul {
+    padding-left: 0;
+}
+
+.dashboard-card li {
+    font-size: 16px;
+    color: #6c757d;
+}
+
+.quick-actions .btn {
+    margin-bottom: 10px;
+}

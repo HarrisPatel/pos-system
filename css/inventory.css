@@ -1,0 +1,28 @@
+.breadcrumb{
+    color: darkgreen;
+background-color: #c5efc5;
+border: 1px solid green;
+padding: 15px;
+border-radius: 5px;
+transition : 0.3s
+}
+
+
+.delete-breadcrumb{
+    color: #640000;
+    background-color: #efc5c5;
+    border: 1px solid #800000;
+    padding: 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin-bottom: 10px
+}
+.update-breadcrumb{
+    color: #055e9d;
+    background-color: #c5e1ef;
+    border: 1px solid #007480;
+    padding: 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin-bottom: 10px
+}
