@@ -13,11 +13,12 @@ $GetTotal = 0;
 //     $_SESSION['key'] = bin2hex(random_bytes(16));
 // }
 
+$user_id = $_SESSION['id'];
 
 // if (isset($_POST['key']) && $_SESSION['key'] === $_POST['key']) {
     $check_sql1 = "SELECT cart.*, product_variants.variant_id, product_variants.product_id
                    FROM cart 
-                   JOIN product_variants ON cart.cart_pid = product_variants.variant_id";
+                   JOIN product_variants ON cart.cart_vid = product_variants.variant_id WHERE cart.user_id = $user_id";
     $result1 = mysqli_query($conn, $check_sql1);
 
     if (!$result1) {

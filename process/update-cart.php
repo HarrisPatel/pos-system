@@ -13,6 +13,7 @@ if (isset($_GET['key']) && $_SESSION['key'] == $_GET['key']) {
     $cartId = mysqli_real_escape_string($conn, $_GET['cid']);
     $variantId = mysqli_real_escape_string($conn, $_GET['vid']);
     $newQty = (int) $_GET['qty'];
+    $user_id = $_SESSION['id'];
     
     $variantQuery = "SELECT product_id, variant_quantity FROM product_variants WHERE variant_id = '$variantId'";
     $variantResult = mysqli_query($conn, $variantQuery);
@@ -37,7 +38,7 @@ if (isset($_GET['key']) && $_SESSION['key'] == $_GET['key']) {
             }
 
             if ($newQty <= $availableQty) {
-                $updateQuery = "UPDATE cart SET cart_qty = $newQty, cart_subprice = cart_price * $newQty WHERE cart_id = '$cartId'";
+                $updateQuery = "UPDATE cart SET cart_qty = $newQty, cart_subprice = cart_price * $newQty WHERE cart_id = '$cartId' AND user_id = $user_id";
                 $updateResult = mysqli_query($conn, $updateQuery);
 
                 if ($updateResult) {

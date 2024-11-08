@@ -2,6 +2,7 @@
 session_start();
 include '../config.php';
 
+$user_id = $_SESSION['id'];
 $totalAmount = $_POST['totalAmount'];
 $receivedAmount = $_POST['receivedAmount'];
 $changeAmount = $receivedAmount - $totalAmount;
@@ -21,12 +22,12 @@ if ($lastReceipt && mysqli_num_rows($lastReceipt) > 0) {
 $insertReceiptSql = "INSERT INTO receipts (receipt_no, checkout_time, total_amount, received_amount, change_amount, cashier_name) VALUES ('$receiptNo', NOW(), '$totalAmount', '$receivedAmount', '$changeAmount','$cashier_name')";
 mysqli_query($conn, $insertReceiptSql);
 
-$cartSql = "SELECT * FROM cart";
+$cartSql = "SELECT * FROM cart WHERE user_id = $user_id";
 $cartResult = mysqli_query($conn, $cartSql);
 
 if (mysqli_num_rows($cartResult) > 0) {
     while ($row = mysqli_fetch_assoc($cartResult)) {
-        $variantId = $row['cart_pid'];
+        $variantId = $row['cart_vid'];
         $variantName = $row['cart_name'];
         $variantQty = $row['cart_qty'];
         $variantPrice = $row['cart_price'];
@@ -52,7 +53,7 @@ if (mysqli_num_rows($cartResult) > 0) {
         $fetch1 = mysqli_fetch_assoc($product_result);
         $stock_type = $fetch1['stock_type'];
 
-        $soldQuantity = $soldQuantity * $variantQty;
+        // $soldQuantity = $soldQuantity * $variantQty;
 
         if ($stock_type == 'multi') {
             $updateProductSql = "UPDATE product_variants SET variant_quantity = variant_quantity - $soldQuantity WHERE variant_id = '$variantId'";
@@ -65,7 +66,7 @@ if (mysqli_num_rows($cartResult) > 0) {
     echo "Cart is empty.";
 }
 
-mysqli_query($conn, "DELETE FROM cart");
+mysqli_query($conn, "DELETE FROM cart WHERE user_id = $user_id");
 unset($_SESSION['temp-amount']);
 
 

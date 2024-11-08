@@ -13,21 +13,21 @@ if (!isset($_SESSION['username']) || $_SESSION['user_type'] != 'cashier') {
     exit();
 }
 
-if (!isset($_GET['key'])) {
-    $response['status'] = 'error';
-    $response['message'] = 'Session key is missing.';
-    echo json_encode($response);
-    exit();
-}
+// if (!isset($_GET['key'])) {
+//     $response['status'] = 'error';
+//     $response['message'] = 'Session key is missing.';
+//     echo json_encode($response);
+//     exit();
+// }
 
-if (!isset($_SESSION['key'])) {
-    $_SESSION['key'] = bin2hex(random_bytes(16));
-}
+// if (!isset($_SESSION['key'])) {
+//     $_SESSION['key'] = bin2hex(random_bytes(16));
+// }
 
-error_log("Session Key: " . $_SESSION['key']);
-error_log("GET Key: " . ($_GET['key'] ?? 'No key in GET'));
+// error_log("Session Key: " . $_SESSION['key']);
+// error_log("GET Key: " . ($_GET['key'] ?? 'No key in GET'));
 
-if ($_SESSION['key'] === $_GET['key']) {
+// if ($_SESSION['key'] === $_GET['key']) {
 
     if (isset($_GET['query'])) {
         $query = mysqli_real_escape_string($conn, $_GET['query']);
@@ -90,12 +90,12 @@ if ($_SESSION['key'] === $_GET['key']) {
         $response['status'] = 'error';
         $response['message'] = 'Error executing query: ' . mysqli_error($conn);
     }
-} else {
-    $response['status'] = 'error';
-    $response['message'] = 'Invalid session key.';
-}
+// } else {
+//     $response['status'] = 'error';
+//     $response['message'] = 'Invalid session key.';
+// }
 
-$_SESSION['key'] = bin2hex(random_bytes(16));
-$response['new_key'] = $_SESSION['key'];
+// $_SESSION['key'] = bin2hex(random_bytes(16));
+// $response['new_key'] = $_SESSION['key'];
 
 echo json_encode($response);
