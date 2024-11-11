@@ -24,8 +24,9 @@ if (!isset($_POST['key'])) {
 if (isset($_POST['key']) && $_SESSION['key'] == $_POST['key']) {
 
     $vid = mysqli_real_escape_string($conn, $_POST['vid']); 
+    $userId = $_SESSION['id'];
 
-    $delete_sql = "DELETE FROM return_cart WHERE variant_id = $vid";
+    $delete_sql = "DELETE FROM return_cart WHERE variant_id = $vid AND user_id = $userId";
     $delete_result = mysqli_query($conn, $delete_sql);
 
     $response['status'] = 'success';

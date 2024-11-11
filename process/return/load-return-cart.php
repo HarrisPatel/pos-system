@@ -4,6 +4,7 @@ session_start();
 
 $cartHtml = '';
 $GetTotal = 0;
+$userId = $_SESSION['id'];
 
 // if (!isset($_SESSION['key'])) {
 //     $_SESSION['key'] = bin2hex(random_bytes(16));
@@ -14,7 +15,7 @@ $response = [];
 // if (isset($_GET['key']) && $_SESSION['key'] === $_GET['key']) {
     // $_SESSION['key'] = bin2hex(random_bytes(16));
 
-    $check_sql1 = "SELECT return_cart.*, sales.sale_id, sales.sold_quantity AS sold_quantity FROM return_cart JOIN sales ON return_cart.sale_id = sales.sale_id";
+    $check_sql1 = "SELECT return_cart.*, sales.sale_id, sales.sold_quantity AS sold_quantity FROM return_cart JOIN sales ON return_cart.sale_id = sales.sale_id WHERE return_cart.user_id = $userId";
     $result1 = mysqli_query($conn, $check_sql1);
 
     if (!$result1) {

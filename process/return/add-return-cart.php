@@ -16,6 +16,7 @@ $sid = mysqli_real_escape_string($conn, $_POST['sid']);
 $price = mysqli_real_escape_string($conn, $_POST['price']);
 $qty = mysqli_real_escape_string($conn, $_POST['qty']);
 $reason = mysqli_real_escape_string($conn, $_POST['reason']);
+$userId = $_SESSION['id'];
 
 if (!isset($_SESSION['key'])) {
     $_SESSION['key'] = bin2hex(random_bytes(16));
@@ -49,7 +50,7 @@ if (isset($_POST['key']) && $_SESSION['key'] == $_POST['key']) {
     $check_fetch = mysqli_fetch_assoc($checkResult);
     $returned_qty = $check_fetch['returned_qty'] ?? 0;
 
-    $remaining_qty = $sale_fetch['sold_quantity'] - $returned_qty;
+    $remaining_qty = $sale_fetch['variant_qty'] - $returned_qty;
 
     if ($qty > $remaining_qty) {
         $response['status'] = 'error';
@@ -58,7 +59,7 @@ if (isset($_POST['key']) && $_SESSION['key'] == $_POST['key']) {
         exit;
     }
 
-    $check_cart_sql = "SELECT * FROM return_cart WHERE variant_id = '$vid'";
+    $check_cart_sql = "SELECT * FROM return_cart WHERE variant_id = '$vid' AND user_id = $userId";
     $check_cart_result = mysqli_query($conn, $check_cart_sql);
     
     if (!$check_cart_result) {
@@ -74,7 +75,7 @@ if (isset($_POST['key']) && $_SESSION['key'] == $_POST['key']) {
 
         if ($new_qty <= $remaining_qty) {
             $subprice = $price * $new_qty;
-            $update_sql = "UPDATE return_cart SET quantity = $new_qty, subprice = $subprice, reason = '$reason' WHERE variant_id = '$vid'";
+            $update_sql = "UPDATE return_cart SET quantity = $new_qty, subprice = $subprice, reason = '$reason' WHERE variant_id = '$vid' AND user_id = $userId";
             $update_result = mysqli_query($conn, $update_sql);
 
             if (!$update_result) {
@@ -92,7 +93,7 @@ if (isset($_POST['key']) && $_SESSION['key'] == $_POST['key']) {
     } else {
         if ($qty <= $remaining_qty) {
             $subprice = $price * $qty;
-            $insert_sql = "INSERT INTO return_cart (product_id,variant_id,sale_id, quantity, price, subprice, reason) VALUES ('$pid','$vid','$sid','$qty','$price','$subprice', '$reason')";
+            $insert_sql = "INSERT INTO return_cart (product_id,variant_id,user_id,sale_id, quantity, price, subprice, reason) VALUES ('$pid','$vid','$userId','$sid','$qty','$price','$subprice', '$reason')";
             $insert_result = mysqli_query($conn, $insert_sql);
 
             if (!$insert_result) {
@@ -109,12 +110,13 @@ if (isset($_POST['key']) && $_SESSION['key'] == $_POST['key']) {
         }
     }
 
-    $response['new_key'] = $_SESSION['key'];
 
 } else {
     $response['status'] = 'error';
     $response['message'] = 'Invalid session key.';
+    
 }
+$response['new_key'] = $_SESSION['key'];
 
 echo json_encode($response);
 ?>

@@ -34,8 +34,8 @@ if (mysqli_num_rows($cartResult) > 0) {
         $variantSubprice = $row['cart_subprice'];
         $soldQuantity = $row['sold_quantity'];
 
-        $sellSql = "INSERT INTO sales (receipt_no,variant_id, sold_quantity, sale_price, sub_price,sale_date) 
-                    VALUES ('$receiptNo', '$variantId', '$variantQty', '$variantPrice', '$variantSubprice',NOW())";
+        $sellSql = "INSERT INTO sales (receipt_no,variant_id, variant_qty,sold_quantity, sale_price, sub_price,sale_date) 
+                    VALUES ('$receiptNo', '$variantId', '$variantQty','$soldQuantity', '$variantPrice', '$variantSubprice',NOW())";
 
         if (!mysqli_query($conn, $sellSql)) {
             echo "Error inserting into sales: " . mysqli_error($conn);
@@ -53,7 +53,6 @@ if (mysqli_num_rows($cartResult) > 0) {
         $fetch1 = mysqli_fetch_assoc($product_result);
         $stock_type = $fetch1['stock_type'];
 
-        // $soldQuantity = $soldQuantity * $variantQty;
 
         if ($stock_type == 'multi') {
             $updateProductSql = "UPDATE product_variants SET variant_quantity = variant_quantity - $soldQuantity WHERE variant_id = '$variantId'";

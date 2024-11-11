@@ -73,7 +73,8 @@ if (isset($_POST['login'])) {
                 <input type="number" class="w-75 p-1" id="password" name="password" placeholder="password" style="border: 2px solid black; outline: none;">
                 <p style="color:red; font-size:12px;margin-left:25px;margin-top:5px"><b><?php echo $message; ?></b></p>
 
-                <button type="submit" name="login" class="btn btn-dark w-25 text-center mt-3">Login</button>
+                <button type="submit" name="login" class="btn btn-dark w-25 text-center mt-3">Login</button><br>
+                <a style="color:black;" href="#">Guide</a>
             </div>
         </form>
     </div>

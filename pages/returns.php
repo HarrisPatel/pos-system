@@ -82,7 +82,7 @@ if (isset($_GET['search'])) {
                                     <tr>
                                         <td><?php echo $no++; ?></td>
                                         <td><?php echo htmlspecialchars($sales_data['variant_name']); ?></td>
-                                        <td><?php echo htmlspecialchars($sales_data['sold_quantity']); ?></td>
+                                        <td><?php echo htmlspecialchars($sales_data['variant_qty']); ?></td>
                                         <td><?php echo htmlspecialchars($sales_data['sale_price']); ?></td>
                                         <td class="border-left border-dark"><?php echo htmlspecialchars($sales_data['sub_price']); ?></td>
                                         <?php
@@ -96,7 +96,7 @@ if (isset($_GET['search'])) {
                                             $return_quantity_fetch = mysqli_fetch_assoc($returnResult);
                                             $return_quantity = $return_quantity_fetch['quantity'];
 
-                                            if ($return_quantity == $sales_data['sold_quantity']) {
+                                            if ($return_quantity == $sales_data['variant_qty']) {
                                                 $returned = true;
                                             }
                                         }
@@ -106,14 +106,14 @@ if (isset($_GET['search'])) {
                                             <select class="select-reason">
                                                 <option value="defective">Defective</option>
                                                 <option value="expire">Expire</option>
-                                                <option value="changed Mind" selected>Changed Mind</option>
+                                                <option value="changed Mind">Changed Mind</option>
                                                 <option value="wrong item">Wrong Item</option>
                                                 <option value="incorrect quantity">Incorrect Quantity</option>
                                             </select>
                                         </td>
 
                                         <td class="d-flex gap-3 action return-box">
-                                            <input type="number" class="return-input" max="<?php echo $sales_data['sold_quantity']; ?>" min="1" value="1" style="width: 70px;">
+                                            <input type="number" class="return-input" max="<?php echo $sales_data['variant_qty']; ?>" min="1" value="1" style="width: 70px;">
                                             <button
                                                 data-rno="<?php echo $search; ?>"
                                                 data-pid="<?php echo $sales_data['product_id']; ?>"
@@ -226,7 +226,8 @@ if (isset($_GET['search'])) {
             var variantId = $(this).data('vid');
             var saleId = $(this).data('sid');
             var Price = $(this).data('price');
-            var reason = $('.select-reason').val()
+            var reason = $(this).closest('tr').find('.select-reason').val();
+            console.log(reason);
             var qty = $(this).closest('.return-box').find('.return-input').val()
             if (qty > 0) {
 
